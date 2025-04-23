@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free online tools to compress images and reduce image size with customizable compression levels." />
+  <meta name="keywords" content="image compression, reduce image size, online image optimizer, compress jpg png" />
+  <meta name="author" content="Your Name" />
+  <title>Image Compression Tool - Free Online Tools</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.2/dist/browser-image-compression.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #1e3a8a, #ffffff, #1e3a8a);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+  <header class="text-center py-10 bg-blue-900 text-white shadow-md">
+    <h1 class="text-4xl font-bold mb-2">Free Online Tools to Compress Images</h1>
+    <p class="text-lg opacity-90">Compress your images online without losing quality</p>
+  </header>
+
+  <!-- Google AdSense Ad Slot -->
+  <div class="py-4 text-center">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+         data-ad-slot="1234567890"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+
+  <main class="flex-grow flex items-center justify-center px-4">
+    <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-lg">
+      <h2 class="text-2xl font-semibold mb-6 text-gray-800 text-center">Compress Your Image</h2>
+      
+      <label class="block mb-2 text-gray-700 font-medium">Select an image:</label>
+      <input type="file" id="imageInput" accept="image/*" class="mb-4 w-full border border-gray-300 rounded px-3 py-2" />
+
+      <label class="block mb-2 text-gray-700 font-medium">Compression Level (1 = Best Quality, 100 = Max Compression):</label>
+      <input type="range" id="compressionLevel" min="1" max="100" value="70" class="w-full mb-4" />
+
+      <button id="compressBtn" class="w-full bg-blue-700 text-white font-semibold py-3 rounded-lg hover:bg-blue-800 transition">Compress Image</button>
+
+      <div id="result" class="mt-6 hidden text-center">
+        <h3 class="text-xl font-medium text-gray-800 mb-2">Compressed Image</h3>
+        <img id="outputImage" src="" alt="Compressed Image" class="mb-3 max-w-full rounded" />
+        <a id="downloadLink" href="#" download class="inline-block bg-green-600 text-white px-5 py-2 rounded hover:bg-green-700 transition">Download Image</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="text-center py-12 bg-blue-900 text-white text-sm">
+    <div class="mb-4 text-base">&copy; 2025 ImageCompressionTool.com. All rights reserved.</div>
+    <div class="flex flex-wrap justify-center gap-6 text-base mb-4">
+      <a href="/privacy-policy" class="underline hover:text-gray-300">Privacy Policy</a>
+      <a href="/terms-of-service" class="underline hover:text-gray-300">Terms of Service</a>
+      <a href="/contact-us" class="underline hover:text-gray-300">Contact Us</a>
+      <a href="/resources" class="underline hover:text-gray-300">Resources</a>
+      <a href="/quick-links" class="underline hover:text-gray-300">Quick Links</a>
+    </div>
+    <div class="mt-6 flex justify-center space-x-8 text-base">
+      <a href="https://www.facebook.com/yourpage" target="_blank" class="hover:text-gray-300">Facebook</a>
+      <a href="https://www.instagram.com/yourprofile" target="_blank" class="hover:text-gray-300">Instagram</a>
+      <a href="https://www.youtube.com/yourchannel" target="_blank" class="hover:text-gray-300">YouTube</a>
+    </div>
+  </footer>
+
+  <script>
+    const imageInput = document.getElementById('imageInput');
+    const compressBtn = document.getElementById('compressBtn');
+    const result = document.getElementById('result');
+    const outputImage = document.getElementById('outputImage');
+    const downloadLink = document.getElementById('downloadLink');
+    const compressionLevel = document.getElementById('compressionLevel');
+
+    compressBtn.addEventListener('click', async () => {
+      const file = imageInput.files[0];
+      if (!file) {
+        alert('Please select an image file.');
+        return;
+      }
+
+      const options = {
+        maxSizeMB: parseFloat((compressionLevel.value / 100).toFixed(2)),
+        useWebWorker: true
+      };
+
+      try {
+        const compressedFile = await imageCompression(file, options);
+        const blobURL = URL.createObjectURL(compressedFile);
+
+        outputImage.src = blobURL;
+        downloadLink.href = blobURL;
+        result.classList.remove('hidden');
+      } catch (error) {
+        console.error(error);
+        alert('Compression failed.');
+      }
+    });
+  </script>
+</body>
+</html>
